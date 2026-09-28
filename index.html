@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Violet — современный дизайн</title>
+    <style>
+        /* ==================== Переменные цветов ==================== */
+        :root {
+            --violet-900: #2b1a4d;
+            --violet-700: #4c2a85;
+            --violet-500: #7c3aed;
+            --violet-300: #b794f6;
+            --violet-100: #ede9fe;
+
+            --gray-900: #1f2233;
+            --gray-700: #4a4d5e;
+            --gray-500: #7a7d8f;
+            --gray-300: #d1d3dd;
+            --gray-100: #f3f4f8;
+
+            --white: #ffffff;
+            --shadow: 0 10px 30px rgba(76, 42, 133, 0.08);
+            --shadow-lg: 0 20px 50px rgba(76, 42, 133, 0.15);
+        }
+
+        /* ==================== Сброс и база ==================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, -apple-system, sans-serif;
+            background: var(--gray-100);
+            color: var(--gray-900);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* ==================== Декоративный фон ==================== */
+        .bg-blobs {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .bg-blobs::before,
+        .bg-blobs::after {
+            content: '';
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.5;
+        }
+
+        .bg-blobs::before {
+            width: 500px;
+            height: 500px;
+            background: var(--violet-300);
+            top: -150px;
+            right: -150px;
+        }
+
+        .bg-blobs::after {
+            width: 400px;
+            height: 400px;
+            background: var(--violet-500);
+            bottom: -150px;
+            left: -150px;
+            opacity: 0.25;
+        }
+
+        /* ==================== Шапка ==================== */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--gray-300);
+        }
+
+        .nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 18px 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 800;
+            font-size: 1.25rem;
+            color: var(--violet-900);
+            letter-spacing: -0.5px;
+        }
+
+        .logo-mark {
+            width: 34px;
+            height: 34px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, var(--violet-500), var(--violet-700));
+            display: grid;
+            place-items: center;
+            color: var(--white);
+            font-size: 1.1rem;
+            box-shadow: 0 6px 16px rgba(124, 58, 237, 0.35);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 8px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            padding: 10px 18px;
+            border-radius: 10px;
+            font-weight: 500;
+            color: var(--gray-700);
+            transition: all 0.25s;
+        }
+
+        .nav-links a:hover {
+            background: var(--violet-100);
+            color: var(--violet-700);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 26px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            border: none;
+            transition: all 0.25s;
+            font-family: inherit;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--violet-500), var(--violet-700));
+            color: var(--white);
+            box-shadow: 0 8px 22px rgba(124, 58, 237, 0.35);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 28px rgba(124, 58, 237, 0.45);
+        }
+
+        .btn-ghost {
+            background: var(--white);
+            color: var(--violet-700);
+            border: 1.5px solid var(--gray-300);
+        }
+
+        .btn-ghost:hover {
+            border-color: var(--violet-500);
+            background: var(--violet-100);
+        }
+
+        /* ==================== Hero ==================== */
+        .hero {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 100px 32px 80px;
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: var(--violet-100);
+            color: var(--violet-700);
+            border-radius: 999px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 24px;
+        }
+
+        .badge-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--violet-500);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.3); }
+        }
+
+        .hero h1 {
+            font-size: clamp(2.2rem, 5vw, 3.5rem);
+            line-height: 1.1;
+            font-weight: 800;
+            letter-spacing: -1.5px;
+            color: var(--violet-900);
+            margin-bottom: 22px;
+        }
+
+        .hero h1 .accent {
+            background: linear-gradient(135deg, var(--violet-500), var(--violet-300));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            color: var(--gray-700);
+            margin-bottom: 34px;
+            max-width: 520px;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+
+        /* Визуальный блок справа */
+        .hero-visual {
+            position: relative;
+            height: 420px;
+        }
+
+        .card-float {
+            position: absolute;
+            background: var(--white);
+            border-radius: 20px;
+            box-shadow: var(--shadow-lg);
+            padding: 24px;
+            border: 1px solid var(--gray-300);
+        }
+
+        .card-float:nth-child(1) {
+            top: 0;
+            left: 0;
+            width: 260px;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .card-float:nth-child(2) {
+            top: 130px;
+            right: 0;
+            width: 220px;
+            background: linear-gradient(135deg, var(--violet-700), var(--violet-500));
+            color: var(--white);
+            border: none;
+            animation: float 6s ease-in-out infinite 1s;
+        }
+
+        .card-float:nth-child(3) {
+            bottom: 0;
+            left: 40px;
+            width: 200px;
+            animation: float 6s ease-in-out infinite 2s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--violet-700);
+            line-height: 1;
+            margin-bottom: 6px;
+        }
+
+        .card-float:nth-child(2) .stat-number {
+            color: var(--white);
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--gray-500);
+        }
+
+        .card-float:nth-child(2) .stat-label {
+            color: rgba(255, 255, 255, 0.85);
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: var(--gray-100);
+            border-radius: 999px;
+            overflow: hidden;
+            margin-top: 14px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            width: 72%;
+            border-radius: 999px;
+            background: linear-gradient(90deg, var(--violet-500), var(--violet-300));
+        }
+
+        /* ==================== Секция "Возможности" ==================== */
+        section.features {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 80px 32px;
+        }
+
+        .section-head {
+            text-align: center;
+            max-width: 620px;
+            margin: 0 auto 60px;
+        }
+
+        .section-head h2 {
+            font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+            font-weight: 800;
+            letter-spacing: -1px;
+            color: var(--violet-900);
+            margin-bottom: 16px;
+        }
+
+        .section-head p {
+            color: var(--gray-500);
+            font-size: 1.05rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+        }
+
+        .feature-card {
+            background: var(--white);
+            border: 1px solid var(--gray-300);
+            border-radius: 20px;
+            padding: 32px 28px;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--violet-500), var(--violet-300));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--violet-300);
+        }
+
+        .feature-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .feature-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 16px;
+            background: var(--violet-100);
+            display: grid;
+            place-items: center;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: var(--violet-700);
+        }
+
+        .feature-card h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--violet-900);
+            margin-bottom: 10px;
+        }
+
+        .feature-card p {
+            color: var(--gray-500);
+            font-size: 0.95rem;
+        }
+
+        /* ==================== CTA ==================== */
+        .cta {
+            max-width: 1200px;
+            margin: 40px auto 100px;
+            padding: 0 32px;
+        }
+
+        .cta-box {
+            background: linear-gradient(135deg, var(--violet-900), var(--violet-700));
+            border-radius: 28px;
+            padding: 70px 50px;
+            text-align: center;
+            color: var(--white);
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .cta-box::before {
+            content: '';
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            background: var(--violet-500);
+            filter: blur(100px);
+            opacity: 0.4;
+            top: -200px;
+            right: -100px;
+        }
+
+        .cta-box h2 {
+            font-size: clamp(1.8rem, 3.5vw, 2.4rem);
+            font-weight: 800;
+            margin-bottom: 16px;
+            position: relative;
+            letter-spacing: -1px;
+        }
+
+        .cta-box p {
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 32px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+            position: relative;
+        }
+
+        .cta .btn-primary {
+            background: var(--white);
+            color: var(--violet-700);
+            position: relative;
+        }
+
+        .cta .btn-primary:hover {
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.3);
+        }
+
+        /* ==================== Подвал ==================== */
+        footer {
+            background: var(--gray-900);
+            color: var(--gray-300);
+            padding: 50px 32px 30px;
+        }
+
+        .footer-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .footer-inner .logo {
+            color: var(--white);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 24px;
+            list-style: none;
+        }
+
+        .footer-links a {
+            color: var(--gray-300);
+            font-size: 0.9rem;
+            transition: color 0.25s;
+        }
+
+        .footer-links a:hover {
+            color: var(--violet-300);
+        }
+
+        .copyright {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 24px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.85rem;
+            color: var(--gray-500);
+        }
+
+        /* ==================== Адаптив ==================== */
+        @media (max-width: 860px) {
+            .hero {
+                grid-template-columns: 1fr;
+                padding: 60px 24px;
+                text-align: center;
+            }
+
+            .hero p {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .hero-actions {
+                justify-content: center;
+            }
+
+            .hero-visual {
+                height: 380px;
+                max-width: 420px;
+                margin: 0 auto;
+                width: 100%;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .cta-box {
+                padding: 50px 28px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Декоративный фон -->
+    <div class="bg-blobs"></div>
+
+    <!-- Шапка -->
+    <header>
+        <nav class="nav">
+            <a href="#" class="logo">
+                <span class="logo-mark">V</span>
+                Violet
+            </a>
+            <ul class="nav-links">
+                <li><a href="#features">Возможности</a></li>
+                <li><a href="#">Тарифы</a></li>
+                <li><a href="#">Блог</a></li>
+                <li><a href="#">Контакты</a></li>
+            </ul>
+            <button class="btn btn-primary">Начать</button>
+        </nav>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div>
+            <span class="badge">
+                <span class="badge-dot"></span>
+                Новое поколение дизайна
+            </span>
+            <h1>
+                Создавайте <span class="accent">красивые</span> интерфейсы быстрее
+            </h1>
+            <p>
+                Современный конструктор с гибкой системой компонентов,
+                продуманной типографикой и поддержкой адаптивности из коробки.
+            </p>
+            <div class="hero-actions">
+                <button class="btn btn-primary">Попробовать бесплатно</button>
+                <button class="btn btn-ghost">Смотреть демо</button>
+            </div>
+        </div>
+
+        <div class="hero-visual">
+            <div class="card-float">
+                <div class="stat-number">12k+</div>
+                <div class="stat-label">Активных пользователей</div>
+                <div class="progress-bar"><div class="progress-fill"></div></div>
+            </div>
+            <div class="card-float">
+                <div class="stat-number">98%</div>
+                <div class="stat-label">Довольны результатом</div>
+            </div>
+            <div class="card-float">
+                <div class="stat-number">4.9</div>
+                <div class="stat-label">Средняя оценка</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Возможности -->
+    <section class="features" id="features">
+        <div class="section-head">
+            <h2>Всё для современной вёрстки</h2>
+            <p>Инструменты, которые ускоряют работу и делают результат аккуратным.</p>
+        </div>
+
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <h3>Молниеносная скорость</h3>
+                <p>Оптимизированный код и лёгкие компоненты без лишних зависимостей.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🎨</div>
+                <h3>Гибкая тема</h3>
+                <p>Меняйте цвета, шрифты и отступы через переменные CSS за секунды.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📱</div>
+                <h3>Адаптивность</h3>
+                <p>Корректное отображение на любых экранах — от телефона до 4K.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🧩</div>
+                <h3>Компонентный подход</h3>
+                <p>Переиспользуемые блоки упрощают поддержку и развитие проекта.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔒</div>
+                <h3>Безопасность</h3>
+                <p>Современные стандарты и чистый код без уязвимостей.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🚀</div>
+                <h3>Быстрый старт</h3>
+                <p>Готовые шаблоны и документация помогут начать за пару минут.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta">
+        <div class="cta-box">
+            <h2>Готовы начать?</h2>
+            <p>Присоединяйтесь к тысячам разработчиков, которые уже создают красивые сайты.</p>
+            <button class="btn btn-primary">Создать аккаунт</button>
+        </div>
+    </section>
+
+    <!-- Подвал -->
+    <footer>
+        <div class="footer-inner">
+            <a href="#" class="logo">
+                <span class="logo-mark">V</span>
+                Violet
+            </a>
+            <ul class="footer-links">
+                <li><a href="#">О нас</a></li>
+                <li><a href="#">Документация</a></li>
+                <li><a href="#">Поддержка</a></li>
+                <li><a href="#">Политика</a></li>
+            </ul>
+        </div>
+        <div class="copyright">
+            © 2025 Violet. Все права защищены.
+        </div>
+    </footer>
+
+</body>
+</html>
